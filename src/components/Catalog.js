@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import './Catalog.css';
 
+const SHEETDB_API = 'https://sheetdb.io/api/v1/xc3sa8jtv6o7m';
+
 const products = [
   {
     id: 1,
@@ -55,9 +57,39 @@ function Catalog() {
     product.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
+  // Publish product to spreadsheet
+  const publishToSheet = async (product) => {
+    try {
+      const response = await fetch(SHEETDB_API, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          data: [{
+            nome: product.name,
+            preco: product.price,
+            categoria: product.category,
+            data_adicao: new Date().toLocaleString('pt-BR')
+          }]
+        })
+      });
+
+      if (!response.ok) {
+        throw new Error('Falha ao publicar produto');
+      }
+
+      alert('Produto publicado com sucesso!');
+    } catch (error) {
+      console.error('Erro ao publicar:', error);
+      alert('Erro ao publicar produto. Tente novamente.');
+    }
+  };
+
   // Add to cart function
   const addToCart = (product) => {
     setCart([...cart, product]);
+    publishToSheet(product);
   };
 
   // Calculate total

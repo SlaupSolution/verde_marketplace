@@ -1,5 +1,19 @@
 
     
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verde Marketplace</title>
+    <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+      background-color: #f5f5f5;
+    }
+    
     .app-container {
       max-width: 390px;
       height: 844px;
@@ -21,6 +35,7 @@
       background: linear-gradient(135deg, #2E7D32, #81C784);
       text-align: center;
       color: white;
+      padding: 20px;
     }
     
     .splash-logo {
@@ -53,523 +68,54 @@
       max-width: 80%;
       margin-bottom: 36px;
     }
-    
-    .login-screen {
-      display: none;
-      height: 100%;
-      padding: 32px 24px;
-    }
-    
-    .login-header {
-      text-align: center;
-      margin-bottom: 36px;
-    }
-    
-    .login-logo {
-      color: #2E7D32;
-      font-size: 32px;
-      font-weight: bold;
-      margin-bottom: 8px;
-    }
-    
-    .login-subtitle {
-      color: #555;
-      font-size: 16px;
-    }
-    
-    .login-form {
+
+    .nav-buttons {
       display: flex;
       flex-direction: column;
+      gap: 16px;
+      width: 80%;
+      max-width: 300px;
     }
-    
-    .login-tabs {
-      display: flex;
-      justify-content: center;
-      margin-bottom: 24px;
-      border-bottom: 1px solid #eee;
-    }
-    
-    .login-tab {
-      padding: 12px 24px;
-      font-size: 16px;
-      cursor: pointer;
-    }
-    
-    .login-tab.active {
+
+    .nav-button {
+      padding: 16px 32px;
+      background-color: white;
       color: #2E7D32;
-      border-bottom: 2px solid #2E7D32;
-      font-weight: bold;
-    }
-    
-    .form-group {
-      margin-bottom: 20px;
-    }
-    
-    .form-label {
-      display: block;
-      margin-bottom: 8px;
-      font-weight: 500;
-      color: #555;
-    }
-    
-    .form-input {
-      width: 100%;
-      padding: 14px 16px;
-      border: 1px solid #ddd;
-      border-radius: 8px;
-      font-size: 16px;
-      transition: border-color 0.3s;
-    }
-    
-    .form-input:focus {
-      border-color: #2E7D32;
-      outline: none;
-    }
-    
-    .login-options {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 24px;
-      font-size: 14px;
-    }
-    
-    .remember-me {
-      display: flex;
-      align-items: center;
-    }
-    
-    .remember-me input {
-      margin-right: 8px;
-    }
-    
-    .forgot-password {
-      color: #2E7D32;
-      text-decoration: none;
-    }
-    
-    .btn {
-      display: block;
-      width: 100%;
-      padding: 16px;
-      background-color: #2E7D32;
-      color: white;
       border: none;
-      border-radius: 8px;
-      font-size: 16px;
+      border-radius: 12px;
+      font-size: 18px;
       font-weight: bold;
       cursor: pointer;
-      text-align: center;
       text-decoration: none;
-      transition: background-color 0.3s;
-    }
-    
-    .btn:hover {
-      background-color: #1B5E20;
-    }
-    
-    .btn-outline {
-      background-color: transparent;
-      border: 1px solid #2E7D32;
-      color: #2E7D32;
-    }
-    
-    .btn-outline:hover {
-      background-color: rgba(46, 125, 50, 0.1);
-    }
-    
-    .social-login {
-      margin-top: 24px;
       text-align: center;
+      transition: transform 0.2s, box-shadow 0.2s;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     }
-    
-    .social-login-title {
-      position: relative;
-      margin-bottom: 16px;
-      font-size: 14px;
-      color: #777;
+
+    .nav-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
     }
-    
-    .social-login-title::before,
-    .social-login-title::after {
-      content: "";
-      position: absolute;
-      top: 50%;
-      width: 30%;
-      height: 1px;
-      background-color: #ddd;
+
+    .nav-button:active {
+      transform: translateY(0);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     }
-    
-    .social-login-title::before {
-      left: 0;
-    }
-    
-    .social-login-title::after {
-      right: 0;
-    }
-    
-    .social-buttons {
-      display: flex;
-      justify-content: center;
-      gap: 16px;
-    }
-    
-    .social-btn {
-      width: 50px;
-      height: 50px;
-      border: 1px solid #ddd;
-      border-radius: 50%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      font-size: 18px;
-      color: #555;
-    }
-    
-    .register-link {
-      margin-top: 24px;
-      text-align: center;
-      font-size: 14px;
-    }
-    
-    .register-link a {
-      color: #2E7D32;
-      font-weight: bold;
-      text-decoration: none;
-    }
-    
-    .home-screen {
-      display: none;
-      height: 100%;
-      padding-bottom: 70px;
-      overflow-y: auto;
-    }
-    
-    .home-header {
-      padding: 16px 24px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      background-color: #FFFFFF;
-      border-bottom: 1px solid #eee;
-    }
-    
-    .home-logo {
-      color: #2E7D32;
-      font-size: 24px;
-      font-weight: bold;
-    }
-    
-    .header-icons {
-      display: flex;
-      gap: 16px;
-    }
-    
-    .header-icon {
-      color: #444;
-      font-size: 20px;
-    }
-    
-    .hero-banner {
-      height: 180px;
-      background: linear-gradient(135deg, #2E7D32, #81C784);
-      padding: 24px;
-      color: white;
-      position: relative;
-    }
-    
-    .hero-content {
-      width: 60%;
-    }
-    
-    .hero-title {
-      font-size: 24px;
-      font-weight: bold;
-      margin-bottom: 8px;
-    }
-    
-    .hero-subtitle {
-      font-size: 14px;
-      opacity: 0.9;
-      margin-bottom: 16px;
-    }
-    
-    .hero-image {
-      position: absolute;
-      right: 0;
-      bottom: 0;
-      width: 150px;
-      height: 150px;
-      background: url('/api/placeholder/150/150') center/cover;
-      border-radius: 8px;
-    }
-    
-    .categories {
-      padding: 24px;
-    }
-    
-    .section-title {
-      font-size: 18px;
-      font-weight: bold;
-      margin-bottom: 16px;
-      color: #333;
-    }
-    
-    .category-items {
-      display: flex;
-      gap: 16px;
-      overflow-x: auto;
-      padding-bottom: 8px;
-    }
-    
-    .category-item {
-      min-width: 80px;
-      text-align: center;
-    }
-    
-    .category-icon {
-      width: 60px;
-      height: 60px;
-      background-color: #E8F5E9;
-      border-radius: 50%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      margin: 0 auto 8px;
-      color: #2E7D32;
-      font-size: 24px;
-    }
-    
-    .category-name {
-      font-size: 12px;
-      color: #555;
-    }
-    
-    .featured-products {
-      padding: 0 24px 24px;
-    }
-    
-    .product-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 16px;
-    }
-    
-    .product-card {
-      background-color: white;
-      border-radius: 12px;
-      overflow: hidden;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    }
-    
-    .product-image {
-      height: 140px;
-      background: url('/api/placeholder/180/140') center/cover;
-    }
-    
-    .product-info {
-      padding: 12px;
-    }
-    
-    .product-name {
-      font-size: 14px;
-      font-weight: 500;
-      margin-bottom: 4px;
-      color: #333;
-    }
-    
-    .product-seller {
-      font-size: 12px;
-      color: #777;
-      margin-bottom: 8px;
-    }
-    
-    .product-price {
-      font-size: 16px;
-      font-weight: bold;
-      color: #2E7D32;
-    }
-    
-    .bottom-nav {
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      height: 70px;
-      background-color: white;
-      display: flex;
-      justify-content: space-around;
-      align-items: center;
-      border-top: 1px solid #eee;
-    }
-    
-    .nav-item {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      color: #777;
-      text-decoration: none;
-      font-size: 10px;
-    }
-    
-    .nav-icon {
-      font-size: 20px;
-      margin-bottom: 4px;
-    }
-    
-    .nav-item.active {
-      color: #2E7D32;
-    }
-    
-    .categories-screen,
-    .product-screen,
-    .cart-screen,
-    .checkout-screen,
-    .tracking-screen,
-    .confirmation-screen,
-    .partner-screen {
-      display: none;
-      height: 100%;
-      padding-bottom: 70px;
-      overflow-y: auto;
-    }
-    
-    .screen-header {
-      padding: 16px 24px;
-      display: flex;
-      align-items: center;
-      background-color: white;
-      border-bottom: 1px solid #eee;
-    }
-    
-    .back-button {
-      font-size: 20px;
-      margin-right: 16px;
-      color: #333;
-    }
-    
-    .screen-title {
-      font-size: 18px;
-      font-weight: bold;
-    }
-    
-    .categories-list {
-      padding: 16px;
-    }
-    
-    .category-block {
-      display: flex;
-      align-items: center;
-      padding: 16px;
-      background-color: white;
-      border-radius: 12px;
-      margin-bottom: 16px;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-    }
-    
-    .category-block-icon {
-      width: 60px;
-      height: 60px;
-      background-color: #E8F5E9;
-      border-radius: 12px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      margin-right: 16px;
-      color: #2E7D32;
-      font-size: 24px;
-    }
-    
-    .category-block-info {
-      flex: 1;
-    }
-    
-    .category-block-name {
-      font-size: 16px;
-      font-weight: 500;
-      margin-bottom: 4px;
-    }
-    
-    .category-block-count {
-      font-size: 12px;
-      color: #777;
-    }
-    
-    .product-details {
-      padding: 16px;
-    }
-    
-    .product-detail-image {
-      height: 240px;
-      background: url('/api/placeholder/390/240') center/cover;
-      border-radius: 12px;
-      margin-bottom: 16px;
-    }
-    
-    .product-detail-name {
-      font-size: 20px;
-      font-weight: bold;
-      margin-bottom: 8px;
-    }
-    
-    .product-detail-seller {
-      display: flex;
-      align-items: center;
-      margin-bottom: 16px;
-    }
-    
-    .seller-avatar {
-      width: 32px;
-      height: 32px;
-      border-radius: 50%;
-      background: url('/api/placeholder/32/32') center/cover;
-      margin-right: 12px;
-    }
-    
-    .seller-info {
-      flex: 1;
-    }
-    
-    .seller-name {
-      font-size: 14px;
-      font-weight: 500;
-    }
-    
-    .seller-location {
-      font-size: 12px;
-      color: #777;
-    }
-    
-    .product-detail-price {
-      font-size: 24px;
-      font-weight: bold;
-      color: #2E7D32;
-      margin-bottom: 16px;
-    }
-    
-    .product-detail-description {
-      margin-bottom: 24px;
-      color: #555;
-      line-height: 1.5;
-    }
-    
-    .product-detail-actions {
-      display: flex;
-      gap: 16<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Verde - Marketplace Regional</title>
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    }
-    
-    body {
-      background-color: #f8f9fa;
-      color: #333;
-    }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <div class="splash-screen">
+            <div class="splash-logo">
+                <span>V</span>
+            </div>
+            <h1 class="splash-title">Verde</h1>
+            <p class="splash-subtitle">Seu marketplace de produtos orgânicos</p>
+            <div class="nav-buttons">
+                <a href="home.html" class="nav-button">Página Inicial</a>
+                <a href="catalogo.html" class="nav-button">Catálogo</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

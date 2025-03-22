@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verde Marketplace - Catálogo</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+        }
+        .catalog-container {
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .search-bar {
+            margin-bottom: 20px;
+        }
+        .search-bar input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+        }
+        .cart-summary {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+        }
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        .product-card {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            overflow: hidden;
+            transition: transform 0.2s;
+        }
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        .product-image img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+        .product-info {
+            padding: 15px;
+        }
+        .product-info h3 {
+            margin: 0 0 10px 0;
+            color: #333;
+        }
+        .category {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 8px;
+        }
+        .price {
+            color: #2E7D32;
+            font-weight: bold;
+            font-size: 18px;
+            margin-bottom: 12px;
+        }
+        .add-to-cart {
+            width: 100%;
+            padding: 10px;
+            background-color: #2E7D32;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .add-to-cart:hover {
+            background-color: #1B5E20;
+        }
+        .nav-bar {
+            background-color: #2E7D32;
+            padding: 15px 0;
+        }
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        .nav-bar a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <nav class="nav-bar">
+        <div class="nav-container">
+            <a href="/home.html">← Voltar para Home</a>
+            <a href="publicarproduto.html" class="publish-button">+ Publicar Produto</a>
+        </div>
+    </nav>
+
+    <div class="catalog-container">
+        <div class="search-bar">
+            <input type="text" id="searchInput" placeholder="Buscar produtos...">
+        </div>
+
+        <div class="cart-summary" id="cartSummary">
+            <h3>Carrinho</h3>
+            <p>Total: R$ <span id="cartTotal">0,00</span></p>
+        </div>
+
+        <div class="products-grid" id="productsGrid"></div>
+    </div>
+
+    <script>
+        const SHEETDB_API = 'https://sheetdb.io/api/v1/xc3sa8jtv6o7m';
+        
+        const products = [
+            {
+                id: 1,
+                name: 'Organic Tomatoes',
+                price: 'R$ 5,99',
+                image: '/images/tomatoes.jpg',
+                category: 'Vegetables'
+            },
+            {
+                id: 2,
+                name: 'Fresh Bread',
+                price: 'R$ 4,50',
+                image: '/images/bread.jpg',
+                category: 'Bakery'
+            },
+            {
+                id: 3,
+                name: 'Local Honey',
+                price: 'R$ 15,90',
+                image: '/images/honey.jpg',
+                category: 'Groceries'
+            },
+            {
+                id: 4,
+                name: 'Farm Eggs',
+                price: 'R$ 8,99',
+                image: '/images/eggs.jpg',
+                category: 'Dairy'
+            },
+            {
+                id: 5,
+                name: 'Organic Lettuce',
+                price: 'R$ 3,99',
+                image: '/images/lettuce.jpg',
+                category: 'Vegetables'
+            },
+            {
+                id: 6,
+                name: 'Regional Cheese',
+                price: 'R$ 22,90',
+                image: '/images/cheese.jpg',
+                category: 'Dairy'
+            }
+        ];
+
+        let cart = [];
+        let cartTotal = 0;
+
+        function renderProducts(productsToRender) {
+            const grid = document.getElementById('productsGrid');
+            grid.innerHTML = '';
+
+            productsToRender.forEach(product => {
+                const card = document.createElement('div');
+                card.className = 'product-card';
+                card.innerHTML = `
+                    <div class="product-image">
+                        <img src="${product.image}" alt="${product.name}">
+                    </div>
+                    <div class="product-info">
+                        <h3>${product.name}</h3>
+                        <div class="category">${product.category}</div>
+                        <div class="price">${product.price}</div>
+                        <button class="add-to-cart" onclick="addToCart(${product.id})">Adicionar ao Carrinho</button>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        async function publishToSheet(product) {
+            try {
+                const response = await fetch(SHEETDB_API, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        data: [{
+                            nome: product.name,
+                            preco: product.price,
+                            categoria: product.category,
+                            data_adicao: new Date().toLocaleString('pt-BR')
+                        }]
+                    })
+                });
+
+                if (!response.ok) {
+                    throw new Error('Falha ao publicar produto');
+                }
+
+                alert('Produto publicado com sucesso!');
+            } catch (error) {
+                console.error('Erro ao publicar:', error);
+                alert('Erro ao publicar produto. Tente novamente.');
+            }
+        }
+
+        function addToCart(productId) {
+            const product = products.find(p => p.id === productId);
+            if (product) {
+                cart.push(product);
+                updateCartTotal();
+                publishToSheet(product);
+            }
+        }
+
+        function updateCartTotal() {
+            cartTotal = cart.reduce((total, item) => 
+                total + parseFloat(item.price.replace('R$ ', '').replace(',', '.')), 0
+            );
+            document.getElementById('cartTotal').textContent = cartTotal.toFixed(2).replace('.', ',');
+        }
+
+        document.getElementById('searchInput').addEventListener('input', (e) => {
+            const searchTerm = e.target.value.toLowerCase();
+            const filteredProducts = products.filter(product =>
+                product.name.toLowerCase().includes(searchTerm)
+            );
+            renderProducts(filteredProducts);
+        });
+
+        // Initial render
+        renderProducts(products);
+    </script>
+</body>
+</html>
